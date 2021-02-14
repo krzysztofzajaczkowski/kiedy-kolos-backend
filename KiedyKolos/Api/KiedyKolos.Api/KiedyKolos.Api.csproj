@@ -12,6 +12,10 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Validators\" />
+    <Folder Include="Responses\" />
+    <Folder Include="Requests\" />
   </ItemGroup>
 
   <ItemGroup>
