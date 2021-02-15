@@ -7,23 +7,6 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace KiedyKolos.Core.Result
 {
-    public enum ResultType
-    {
-        Ok,
-        Created,
-        Updated,
-        Deleted
-    }
-
-    public enum ErrorType
-    {
-        NotFound,
-        NotValid,
-        NotAuthenticated,
-        NotAuthorized,
-        Unknown
-    }
-
     public class Result
     {
         public bool Succeeded { get; set; }
