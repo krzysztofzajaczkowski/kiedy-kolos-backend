@@ -13,6 +13,9 @@ namespace KiedyKolos.Infrastructure.Data.Configuration
       builder.Property(e => e.Name)
         .HasMaxLength(20);
 
+      builder.HasIndex(e => e.Name)
+        .IsUnique();
+
       builder.HasMany<Event>(e => e.Events)
         .WithOne(e => e.EventType)
         .HasForeignKey(e => e.EventTypeId);
