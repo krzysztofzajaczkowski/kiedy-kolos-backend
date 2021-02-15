@@ -1,3 +1,4 @@
+using KiedyKolos.Infrastructure.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,7 @@ namespace KiedyKolos.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "KiedyKolos.Api", Version = "v1" });
             });
+            services.AddInfrastructure(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
