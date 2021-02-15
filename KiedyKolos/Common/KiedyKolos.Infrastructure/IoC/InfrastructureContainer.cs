@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using KiedyKolos.Core.Result;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using KiedyKolos.Infrastructure.Data.Context;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace KiedyKolos.Infrastructure.IoC
@@ -13,7 +16,10 @@ namespace KiedyKolos.Infrastructure.IoC
 			{
 				options.UseInMemoryDatabase("db");
 			});
-			return services;
+
+            services.AddMediatR(typeof(Result));
+
+            return services;
 		}
 	}
 }	
