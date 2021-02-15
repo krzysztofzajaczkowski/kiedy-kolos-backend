@@ -4,20 +4,20 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace KiedyKolos.Infrastructure.Data.Configuration
 {
-  public class GroupConfiguration : IEntityTypeConfiguration<Group>
-  {
-    public void Configure(EntityTypeBuilder<Group> builder)
+    public class GroupConfiguration : IEntityTypeConfiguration<Group>
     {
-      builder.HasKey(e => e.Id);
+        public void Configure(EntityTypeBuilder<Group> builder)
+        {
+            builder.HasKey(e => e.Id);
 
-      builder.HasMany<GroupEvent>(e => e.GroupEvents)
-        .WithOne(e => e.Group)
-        .HasForeignKey(e => e.GroupId);
+            builder.HasMany<GroupEvent>(e => e.GroupEvents)
+            .WithOne(e => e.Group)
+            .HasForeignKey(e => e.GroupId);
 
-      builder.HasOne<YearCourse>(e => e.YearCourse)
-        .WithMany(e => e.Groups)
-        .HasForeignKey(e => e.YearCourseId);
-      
+            builder.HasOne<YearCourse>(e => e.YearCourse)
+            .WithMany(e => e.Groups)
+            .HasForeignKey(e => e.YearCourseId);
+            
+        }
     }
-  }
 }
