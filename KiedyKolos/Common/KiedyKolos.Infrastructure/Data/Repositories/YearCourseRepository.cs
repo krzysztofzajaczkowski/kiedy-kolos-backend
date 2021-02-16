@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KiedyKolos.Core.Interfaces;
 using KiedyKolos.Core.Models;
 using KiedyKolos.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace KiedyKolos.Infrastructure.Data.Repositories
 {
@@ -14,34 +16,39 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
             _dbContext = appDbContext;
         }
 
-        public async Task Add(YearCourse yearCourse)
+        public async Task AddAsync(YearCourse yearCourse)
         {
             _dbContext.YearCourses.Add(yearCourse);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var yearCourse = await _dbContext.YearCourses.FindAsync(id);
-            if(yearCourse == null)
+            var yearCourse = new YearCourse
+            {
+                Id = id
+            };
+            if(!await _dbContext.YearCourses.ContainsAsync(yearCourse))
                 return;
+
             _dbContext.YearCourses.Remove(yearCourse);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<YearCourse> Get(int id)
+        public async Task<YearCourse> GetAsync(int id)
         {
             return await _dbContext.YearCourses.FindAsync(id);
         }
 
-        public List<YearCourse> GetAll()
+        public async  Task<List<YearCourse>> GetAllAsync()
         {
-            return _dbContext.YearCourses.ToList();
+            return await _dbContext.YearCourses.ToListAsync();
         }
 
-        public async Task Update(YearCourse yearCourse)
+        public async Task UpdateAsync(YearCourse yearCourse)
         {
-            _dbContext.YearCourses.Update(yearCourse);
+            var existingYearCourse = await _dbContext.YearCourses.FindAsync(yearCourse.Id);
+            _dbContext.Entry(existingYearCourse).CurrentValues.SetValues(yearCourse);
             await _dbContext.SaveChangesAsync();
         }
     }
