@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using KiedyKolos.Core.Interfaces;
 using KiedyKolos.Core.Models;
 using KiedyKolos.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -15,35 +17,36 @@ namespace KiedyKolos.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
-            return Ok(_yearCourseRepository.GetAll());
+            return Ok(await _yearCourseRepository.GetAllAsync());
         }
 
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            return Ok(_yearCourseRepository.Get(id));
+            return Ok(await _yearCourseRepository.GetAsync(id));
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return Ok(_yearCourseRepository.Delete(id));
+            await _yearCourseRepository.DeleteAsync(id);
+            return Ok();
         }
 
         [HttpPost]
-        public ActionResult Add(YearCourse yearCourse)
+        public async Task<ActionResult> Add(YearCourse yearCourse)
         {
-            _yearCourseRepository.Add(yearCourse);
+            await _yearCourseRepository.AddAsync(yearCourse);
 
             return Ok();
         }
 
-        [HttpPatch]
-        public ActionResult Update(YearCourse yearCourse)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, YearCourse yearCourse)
         {
-            _yearCourseRepository.Update(yearCourse);
+            await _yearCourseRepository.UpdateAsync(yearCourse);
             return Ok();
         }
     }
