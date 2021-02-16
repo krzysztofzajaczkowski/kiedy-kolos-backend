@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using KiedyKolos.Infrastructure.Data.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using KiedyKolos.Infrastructure.Data.Repositories;
+using KiedyKolos.Core.Interfaces;
 
 namespace KiedyKolos.Infrastructure.IoC
 {
@@ -16,6 +18,7 @@ namespace KiedyKolos.Infrastructure.IoC
 			{
 				options.UseInMemoryDatabase("db");
 			});
+            services.AddScoped<IYearCourseRepository, YearCourseRepository>();
 
             services.AddMediatR(typeof(Result));
 
