@@ -19,7 +19,6 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
         public async Task AddAsync(YearCourse yearCourse)
         {
             _dbContext.YearCourses.Add(yearCourse);
-            await _dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
@@ -32,7 +31,6 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
                 return;
 
             _dbContext.YearCourses.Remove(yearCourse);
-            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<YearCourse> GetAsync(int id)
@@ -49,7 +47,6 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
         {
             var existingYearCourse = await _dbContext.YearCourses.FindAsync(yearCourse.Id);
             _dbContext.Entry(existingYearCourse).CurrentValues.SetValues(yearCourse);
-            await _dbContext.SaveChangesAsync();
         }
     }
 }
