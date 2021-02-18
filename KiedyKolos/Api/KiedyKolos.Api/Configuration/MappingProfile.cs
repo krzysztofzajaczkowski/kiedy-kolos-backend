@@ -13,6 +13,13 @@ namespace KiedyKolos.Api.Configuration
     {
         public MappingProfile()
         {
+            CreateMap<CreateYearCourseRequest, YearCourse>();
+
+            CreateMap<YearCourse, GetBlockYearCourseResponse>();
+
+            CreateMap<YearCourse, GetYearCourseResponse>();
+
+            CreateMap<UpdateYearCourseRequest, YearCourse>();
         }
     }
 }
