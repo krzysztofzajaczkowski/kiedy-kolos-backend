@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KiedyKolos.Api.Configuration;
 
 namespace KiedyKolos.Api
 {
@@ -33,7 +34,10 @@ namespace KiedyKolos.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "KiedyKolos.Api", Version = "v1" });
             });
+
             services.AddInfrastructure(Configuration);
+
+            services.AddAutoMapper(typeof(MappingProfile));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
