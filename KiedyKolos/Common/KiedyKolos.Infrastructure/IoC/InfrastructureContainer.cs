@@ -22,7 +22,7 @@ namespace KiedyKolos.Infrastructure.IoC
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddMediatR(typeof(BaseResult));
+            services.AddMediatR(typeof(Result));
 
             return services;
 		}
