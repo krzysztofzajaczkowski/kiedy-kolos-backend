@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 
 namespace KiedyKolos.Api.Responses
 {
-    public class ApiResponse<T> where T: class
+    public class ApiResponse
     {
         public List<string> Messages { get; set; } = new List<string>();
+    }
+    public class ApiResponse<T> : ApiResponse
+    {
         public T Result { get; set; }
     }
 }
