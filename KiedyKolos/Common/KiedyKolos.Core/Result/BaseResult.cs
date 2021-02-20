@@ -7,40 +7,40 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace KiedyKolos.Core.Result
 {
-    public class Result
+    public class BaseResult
     {
         public bool Succeeded { get; set; }
         public List<string> ErrorMessages { get; set; } = new List<string>();
         public ResultType? ResultType { get; set; }
         public ErrorType? ErrorType { get; set; }
 
-        public Result()
+        public BaseResult()
         {
             Succeeded = true;
             ResultType = Core.Result.ResultType.Ok;
         }
 
-        public static Result Success(ResultType resultType)
+        public static BaseResult Success(ResultType resultType)
         {
-            return new Result
+            return new BaseResult
             {
                 Succeeded = true,
                 ResultType = resultType
             };
         }
 
-        public static Result Fail(ErrorType errorType)
+        public static BaseResult Fail(ErrorType errorType)
         {
-            return new Result
+            return new BaseResult
             {
                 Succeeded = false,
                 ErrorType = errorType
             };
         }
 
-        public static Result Fail(ErrorType errorType, List<string> errors)
+        public static BaseResult Fail(ErrorType errorType, List<string> errors)
         {
-            return new Result
+            return new BaseResult
             {
                 Succeeded = false,
                 ErrorType = errorType,
@@ -50,13 +50,13 @@ namespace KiedyKolos.Core.Result
 
     }
 
-    public class Result<T> : Result
+    public class BaseResult<T> : BaseResult
     {
         public T Output { get; set; }
 
-        public static Result Success(ResultType resultType, T output)
+        public static BaseResult<T> Success(ResultType resultType, T output)
         {
-            return new Result<T>
+            return new BaseResult<T>
             {
                 Succeeded = true,
                 ResultType = resultType,
