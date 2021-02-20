@@ -54,7 +54,7 @@ namespace KiedyKolos.Core.Result
     {
         public T Output { get; set; }
 
-        public static Result Success(ResultType resultType, T output)
+        public static Result<T> Success(ResultType resultType, T output)
         {
             return new Result<T>
             {
