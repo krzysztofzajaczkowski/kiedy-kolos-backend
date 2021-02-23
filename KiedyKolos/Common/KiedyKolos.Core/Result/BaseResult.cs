@@ -9,15 +9,15 @@ namespace KiedyKolos.Core.Result
 {
     public class BaseResult
     {
-        public bool Succeeded { get; set; }
-        public List<string> ErrorMessages { get; set; } = new List<string>();
-        public ResultType? ResultType { get; set; }
-        public ErrorType? ErrorType { get; set; }
+        public bool Succeeded { get; protected set; }
+        public List<string> ErrorMessages { get; protected set; } = new List<string>();
+        public ResultType? ResultType { get; protected set; }
+        public ErrorType? ErrorType { get; protected set; }
 
         public BaseResult()
         {
             Succeeded = true;
-            ResultType = Core.Result.ResultType.Ok;
+            ResultType = Result.ResultType.Ok;
         }
 
         public static BaseResult Success(ResultType resultType)
