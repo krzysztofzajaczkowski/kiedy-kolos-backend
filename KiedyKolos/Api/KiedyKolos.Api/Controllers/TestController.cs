@@ -55,6 +55,51 @@ namespace KiedyKolos.Api.Controllers
             });
         }
 
+        [HttpPatch("{id}/increment")]
+        public async Task<IActionResult> IncrementSemester(int id, int incrementBy)
+        {
+            var apiKey = Request.Headers.FirstOrDefault(h => string.Equals(h.Key, _options.ApiKeyHeaderName, StringComparison.CurrentCultureIgnoreCase))
+                .Value;
+            var result = await _mediator.Send(new IncrementSemesterCommand
+            {
+                YearCourseId = id,
+                Password = apiKey,
+                IncrementBy = incrementBy
+            });
+
+            if (!result.Succeeded)
+            {
+                if (result.ErrorType == ErrorType.NotAuthenticated)
+                {
+                    return StatusCode(401, new ApiResponse<Unit>
+                    {
+                        Messages = result.ErrorMessages
+                    });
+                }
+
+                if (result.ErrorType == ErrorType.NotAuthorized)
+                {
+                    return StatusCode(403, new ApiResponse<Unit>
+                    {
+                        Messages = result.ErrorMessages
+                    });
+                }
+
+                if (result.ErrorType == ErrorType.NotFound)
+                {
+                    return NotFound(new ApiResponse<Unit>
+                    {
+                        Messages = result.ErrorMessages
+                    });
+                }
+            }
+
+            return Ok(new ApiResponse<Unit>
+            {
+                Messages = result.ErrorMessages
+            });
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
