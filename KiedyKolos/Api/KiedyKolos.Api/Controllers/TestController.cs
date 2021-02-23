@@ -69,29 +69,10 @@ namespace KiedyKolos.Api.Controllers
 
             if (!result.Succeeded)
             {
-                if (result.ErrorType == ErrorType.NotAuthenticated)
+                return StatusCode((int?) result.ErrorType ?? 400, new ApiResponse<Unit>
                 {
-                    return StatusCode(401, new ApiResponse<Unit>
-                    {
-                        Messages = result.ErrorMessages
-                    });
-                }
-
-                if (result.ErrorType == ErrorType.NotAuthorized)
-                {
-                    return StatusCode(403, new ApiResponse<Unit>
-                    {
-                        Messages = result.ErrorMessages
-                    });
-                }
-
-                if (result.ErrorType == ErrorType.NotFound)
-                {
-                    return NotFound(new ApiResponse<Unit>
-                    {
-                        Messages = result.ErrorMessages
-                    });
-                }
+                    Messages = result.ErrorMessages
+                });
             }
 
             return Ok(new ApiResponse<Unit>
