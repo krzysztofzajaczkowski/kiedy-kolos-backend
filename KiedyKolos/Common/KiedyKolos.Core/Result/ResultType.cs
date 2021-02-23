@@ -2,9 +2,9 @@
 {
     public enum ResultType
     {
-        Ok,
-        Created,
-        Updated,
-        Deleted
+        Ok = 200,
+        Created = 201,
+        Updated = 200,
+        Deleted = 204
     }
 }
