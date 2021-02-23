@@ -8,7 +8,7 @@ namespace KiedyKolos.Core.Middleware.Interfaces
 {
     public interface IAuthorizable
     {
-        public int YearCourseId { get; set; }
-        public string Password { get; set; }
+        int YearCourseId { get; set; }
+        string Password { get; set; }
     }
 }
