@@ -21,79 +21,56 @@ namespace KiedyKolos.Core.Middleware.Behaviors
         }
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
+            var success = true;
             var yearCourse = await _unitOfWork.YearCourseRepository.GetAsync(request.YearCourseId);
-            if (yearCourse == null)
+            var errorMessages = new List<string>();
+            ErrorType errorType = default;
+            if (success && yearCourse == null)
             {
-                var errorMessages = new List<string>
+                errorMessages = new List<string>
                 {
                     "Resource not found!"
                 };
-                var errorType = ErrorType.NotFound;
-
-                var responseType = typeof(TResponse);
-
-                if (responseType.IsGenericType)
-                {
-                    var resultType = responseType.GetGenericArguments()[0];
-                    var invalidResponseType = typeof(BaseResult<>).MakeGenericType(resultType);
-
-                    var invalidResponse = Activator.CreateInstance(invalidResponseType, null, errorMessages,
-                        errorType) as TResponse;
-
-                    return invalidResponse;
-                }
-
-                return BaseResult.Fail(errorType, errorMessages) as TResponse;
+                errorType = ErrorType.NotFound;
+                success = false;
             }
 
-            if (string.IsNullOrEmpty(request.Password))
+            if (success && string.IsNullOrEmpty(request.Password))
             {
-                var errorMessages = new List<string>
+                errorMessages = new List<string>
                 {
                     "No password provided!"
                 };
-                var errorType = ErrorType.NotAuthenticated;
-
-                var responseType = typeof(TResponse);
-
-                if (responseType.IsGenericType)
-                {
-                    var resultType = responseType.GetGenericArguments()[0];
-                    var invalidResponseType = typeof(BaseResult<>).MakeGenericType(resultType);
-
-
-                    var invalidResponse = Activator.CreateInstance(invalidResponseType, null, errorMessages,
-                        errorType) as TResponse;
-
-                    return invalidResponse;
-                }
-
-                return BaseResult.Fail(errorType, errorMessages) as TResponse;
+                errorType = ErrorType.NotAuthenticated;
+                success = false;
             }
 
-            if (yearCourse.Password != request.Password)
+            if (success && yearCourse?.Password != request.Password)
             {
-                var errorMessages = new List<string>
+                errorMessages = new List<string>
                 {
                     "Invalid password!"
                 };
-                var errorType = ErrorType.NotAuthorized;
+                errorType = ErrorType.NotAuthorized;
+                success = false;
+            }
 
+            if (!success)
+            {
                 var responseType = typeof(TResponse);
 
-                if (responseType.IsGenericType)
+                if (!responseType.IsGenericType)
                 {
-                    var resultType = responseType.GetGenericArguments()[0];
-                    var invalidResponseType = typeof(BaseResult<>).MakeGenericType(resultType);
-
-                    
-                    var invalidResponse = Activator.CreateInstance(invalidResponseType, null, errorMessages,
-                        errorType) as TResponse;
-
-                    return invalidResponse;
+                    return BaseResult.Fail(errorType, errorMessages) as TResponse;
                 }
 
-                return BaseResult.Fail(errorType, errorMessages) as TResponse;
+                var resultType = responseType.GetGenericArguments()[0];
+                var invalidResponseType = typeof(BaseResult<>).MakeGenericType(resultType);
+
+                var invalidResponse = Activator.CreateInstance(invalidResponseType, null, errorMessages,
+                    errorType) as TResponse;
+
+                return invalidResponse;
             }
 
             var response = await next();
