@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using KiedyKolos.Infrastructure.Data.Repositories;
 using KiedyKolos.Core.Interfaces;
+using KiedyKolos.Core.Middleware.Behaviors;
 
 namespace KiedyKolos.Infrastructure.IoC
 {
@@ -23,6 +24,8 @@ namespace KiedyKolos.Infrastructure.IoC
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddMediatR(typeof(BaseResult));
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestAuthorizationBehavior<,>));
 
             return services;
 		}
