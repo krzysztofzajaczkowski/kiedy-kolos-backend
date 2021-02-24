@@ -12,5 +12,6 @@ namespace KiedyKolos.Api.Requests
         public string Faculty { get; set; }
         public string University { get; set; }
         public int CurrentSemester { get; set; }
+        public string Password { get; set; }
     }
 }

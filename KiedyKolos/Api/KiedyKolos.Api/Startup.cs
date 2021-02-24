@@ -32,8 +32,13 @@ namespace KiedyKolos.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
+                c.OperationFilter<SwaggerApiKeyOperationFilter>();
+
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "KiedyKolos.Api", Version = "v1" });
             });
+
+            var authOptionsSection = Configuration.GetSection("AuthOptions");
+            services.Configure<AuthOptions>(authOptionsSection);
 
             services.AddInfrastructure(Configuration);
 
