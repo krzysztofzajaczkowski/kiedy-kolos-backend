@@ -63,5 +63,24 @@ namespace KiedyKolos.Core.Result
                 Output = output
             };
         }
+
+        public new static BaseResult<T> Fail(ErrorType errorType)
+        {
+            return new BaseResult<T>
+            {
+                Succeeded = false,
+                ErrorType = errorType
+            };
+        }
+
+        public new static BaseResult<T> Fail(ErrorType errorType, List<string> errors)
+        {
+            return new BaseResult<T>
+            {
+                Succeeded = false,
+                ErrorType = errorType,
+                ErrorMessages = errors
+            };
+        }
     }
 }
