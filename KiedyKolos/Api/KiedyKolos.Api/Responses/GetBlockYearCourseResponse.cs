@@ -9,6 +9,7 @@ namespace KiedyKolos.Api.Responses
     {
         public int Id { get; set; }
         public string Course { get; set; }
+        public string Faculty { get; set; }
         public string University { get; set; }
         public int CurrentSemester { get; set; }
     }
