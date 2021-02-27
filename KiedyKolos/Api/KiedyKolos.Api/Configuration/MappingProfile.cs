@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using KiedyKolos.Api.Requests;
 using KiedyKolos.Api.Responses;
+using KiedyKolos.Core.Dtos;
 using KiedyKolos.Core.Models;
 
 namespace KiedyKolos.Api.Configuration
@@ -20,6 +21,8 @@ namespace KiedyKolos.Api.Configuration
             CreateMap<YearCourse, GetYearCourseResponse>();
 
             CreateMap<UpdateYearCourseRequest, YearCourse>();
+
+            CreateMap<CreateSubjectRequest, CreateSubjectDto>();
         }
     }
 }
