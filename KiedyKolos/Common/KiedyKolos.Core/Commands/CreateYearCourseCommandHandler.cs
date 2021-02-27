@@ -41,11 +41,10 @@ namespace KiedyKolos.Core.Commands
                     CourseStartYear = request.CourseStartYear,
                     Faculty = request.Faculty,
                     University = request.University,
-                    Groups = Enumerable.Range(1,request.NumberOfGroups).Select(n => new Group
+                    Groups = request.Groups.Select(g => new Group
                     {
-                        GroupNumber = n,
-                        GroupName = $"Grupa {n}"
-                        
+                        GroupName = g.GroupName,
+                        GroupNumber = g.GroupNumber
                     }).ToList(),
                     Subjects = request.Subjects.Select(s => new Subject
                     {
