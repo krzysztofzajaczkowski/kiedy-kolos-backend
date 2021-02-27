@@ -7,6 +7,7 @@ using KiedyKolos.Api.Configuration;
 using KiedyKolos.Api.Requests;
 using KiedyKolos.Api.Responses;
 using KiedyKolos.Core.Commands;
+using KiedyKolos.Core.Dtos;
 using KiedyKolos.Core.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -82,7 +83,9 @@ namespace KiedyKolos.Api.Controllers
                 University = request.University,
                 CreationApiKey = request.CreationApiKey,
                 CurrentSemester = request.CurrentSemester,
-                Course = request.Course
+                Course = request.Course,
+                Subjects = _mapper.Map<List<CreateSubjectDto>>(request.Subjects),
+                Groups = _mapper.Map<List<CreateGroupDto>>(request.Groups)
             });
 
             if (!result.Succeeded)
