@@ -109,5 +109,13 @@ namespace KiedyKolos.Api.Controllers
             
             return Ok();
         }
+
+        [HttpPost("addKey")]
+        public async Task<IActionResult> AddKey(string key)
+        {
+            await _unitOfWork.KeyRepository.AddAsync(key);
+            await _unitOfWork.CommitAsync();
+            return Ok();
+        }
     }
 }
