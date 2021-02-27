@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KiedyKolos.Core.Dtos;
 using KiedyKolos.Core.Result;
 using MediatR;
 
@@ -17,5 +18,7 @@ namespace KiedyKolos.Core.Commands
         public int CurrentSemester { get; set; }
         public string Password { get; set; }
         public string CreationApiKey { get; set; }
+        public int NumberOfGroups { get; set; }
+        public List<CreateSubjectDto> Subjects { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using KiedyKolos.Core.Interfaces;
 using KiedyKolos.Core.Models;
 using KiedyKolos.Core.Result;
@@ -39,7 +40,18 @@ namespace KiedyKolos.Core.Commands
                     Course = request.Course,
                     CourseStartYear = request.CourseStartYear,
                     Faculty = request.Faculty,
-                    University = request.University
+                    University = request.University,
+                    Groups = Enumerable.Range(1,request.NumberOfGroups).Select(n => new Group
+                    {
+                        GroupNumber = n,
+                        GroupName = $"Grupa {n}"
+                        
+                    }).ToList(),
+                    Subjects = request.Subjects.Select(s => new Subject
+                    {
+                        Name = s.Name,
+                        ShortName = s.ShortName
+                    }).ToList()
                 };
                 await _unitOfWork.YearCourseRepository.AddAsync(yearCourse);
 
