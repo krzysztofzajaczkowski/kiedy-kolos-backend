@@ -14,5 +14,7 @@ namespace KiedyKolos.Api.Requests
         public int CurrentSemester { get; set; }
         public string Password { get; set; }
         public string CreationApiKey { get; set; }
+        public int NumberOfGroups { get; set; }
+        public List<CreateSubjectRequest> Subjects { get; set; }
     }
 }
