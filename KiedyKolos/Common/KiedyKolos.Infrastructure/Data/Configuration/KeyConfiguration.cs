@@ -9,6 +9,9 @@ namespace KiedyKolos.Infrastructure.Data.Configuration
         public void Configure(EntityTypeBuilder<Key> builder)
         {
             builder.HasKey(e => e.Id);
+
+            builder.HasIndex(e => e.Value)
+                .IsUnique();
         }
     }
 }
