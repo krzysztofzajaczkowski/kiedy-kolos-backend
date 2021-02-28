@@ -9,6 +9,7 @@ namespace KiedyKolos.Core.Interfaces
     public interface IUnitOfWork
     {
         IYearCourseRepository YearCourseRepository { get; }
+        IKeyRepository KeyRepository { get; }
         Task CommitAsync();
         Task RollbackAsync();
     }

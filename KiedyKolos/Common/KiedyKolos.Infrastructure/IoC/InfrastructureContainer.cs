@@ -21,6 +21,8 @@ namespace KiedyKolos.Infrastructure.IoC
 			});
             services.AddScoped<IYearCourseRepository, YearCourseRepository>();
 
+            services.AddScoped<IKeyRepository, KeyRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddMediatR(typeof(BaseResult));

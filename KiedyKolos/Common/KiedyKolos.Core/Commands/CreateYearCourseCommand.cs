@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using KiedyKolos.Core.Dtos;
+using KiedyKolos.Core.Result;
+using MediatR;
 
-namespace KiedyKolos.Api.Requests
+namespace KiedyKolos.Core.Commands
 {
-    public class CreateYearCourseRequest
+    public class CreateYearCourseCommand : IRequest<BaseResult<int>>
     {
         public string Course { get; set; }
         public int CourseStartYear { get; set; }
@@ -14,7 +18,7 @@ namespace KiedyKolos.Api.Requests
         public int CurrentSemester { get; set; }
         public string Password { get; set; }
         public string CreationApiKey { get; set; }
-        public List<CreateSubjectRequest> Subjects { get; set; }
-        public List<CreateGroupRequest> Groups { get; set; }
+        public List<CreateSubjectDto> Subjects { get; set; }
+        public List<CreateGroupDto> Groups { get; set; }
     }
 }

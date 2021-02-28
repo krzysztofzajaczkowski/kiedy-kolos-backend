@@ -7,11 +7,12 @@ namespace KiedyKolos.Api.Requests
 {
     public class UpdateYearCourseRequest
     {
-        public int Id { get; set; }
+        public int YearCourseId { get; set; }
         public string Course { get; set; }
         public int CourseStartYear { get; set; }
         public string Faculty { get; set; }
         public string University { get; set; }
         public int CurrentSemester { get; set; }
+        public string NewPassword { get; set; }
     }
 }

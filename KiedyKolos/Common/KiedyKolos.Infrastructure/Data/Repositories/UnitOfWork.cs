@@ -12,6 +12,7 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
     {
         private readonly AppDbContext _appDbContext;
         private IYearCourseRepository _yearCourseRepository;
+        private KeyRepository _keyRepository;
 
         public UnitOfWork(AppDbContext appDbContext)
         {
@@ -19,6 +20,8 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
         }
 
         public IYearCourseRepository YearCourseRepository => _yearCourseRepository ??= new YearCourseRepository(_appDbContext);
+
+        public IKeyRepository KeyRepository => _keyRepository ??= new KeyRepository(_appDbContext);
 
         public async Task CommitAsync()
         {
