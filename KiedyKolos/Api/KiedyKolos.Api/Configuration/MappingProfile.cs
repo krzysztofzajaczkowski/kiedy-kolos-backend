@@ -25,6 +25,8 @@ namespace KiedyKolos.Api.Configuration
             CreateMap<CreateSubjectRequest, CreateSubjectDto>();
 
             CreateMap<CreateGroupRequest, CreateGroupDto>();
+
+            CreateMap<Subject, GetSubjectResponse>();
         }
     }
 }
