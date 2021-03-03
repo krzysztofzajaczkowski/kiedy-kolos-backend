@@ -67,6 +67,11 @@ namespace KiedyKolos.Core.Middleware.Behaviors
                 var resultType = responseType.GetGenericArguments()[0];
                 var invalidResponseType = typeof(BaseResult<>).MakeGenericType(resultType);
 
+                if (resultType.IsValueType)
+                {
+                    return BaseResult<int>.Fail(errorType, errorMessages) as TResponse;
+                }
+
                 var invalidResponse = Activator.CreateInstance(invalidResponseType, null, errorMessages,
                     errorType) as TResponse;
 
