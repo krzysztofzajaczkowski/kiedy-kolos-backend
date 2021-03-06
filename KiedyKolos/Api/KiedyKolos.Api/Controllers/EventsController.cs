@@ -81,9 +81,29 @@ namespace KiedyKolos.Api.Controllers
         }
 
         [HttpGet("/yearCourses/{yearCourseId}/groups/{groupId}/[controller]")]
-        public async Task<IActionResult> GetYearCourseEventsForGroupAsync(int yearCourseId, int groupId, [FromQuery] DateTime date)
+        public async Task<IActionResult> GetYearCourseEventsForGroupAsync(int yearCourseId, int groupId, [FromQuery] DateTime? date)
         {
-            return null;
+            var result = await _mediator.Send(new GetYearCourseEventsForGroupQuery
+            {
+                YearCourseId = yearCourseId,
+                GroupId = groupId,
+                Date = date
+            });
+
+            if (!result.Succeeded)
+            {
+                return StatusCode((int?)result.ErrorType ?? 400, new ApiResponse
+                {
+                    Messages = result.ErrorMessages
+                });
+            }
+
+            var dto = _mapper.Map<List<GetEventResponse>>(result.Output);
+
+            return Ok(new ApiResponse<List<GetEventResponse>>
+            {
+                Result = dto
+            });
         }
 
         [HttpGet("{eventId}")]
