@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using KiedyKolor.Core.Commands;
+using KiedyKolor.Core.Queries;
 using KiedyKolos.Api.Configuration;
 using KiedyKolos.Api.Responses;
 using KiedyKolos.Core.Models;
@@ -51,9 +54,27 @@ namespace KiedyKolos.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCourseEventsAsync(int yearCourseId, [FromQuery] DateTime date)
+        public async Task<IActionResult> GetYearCourseEventsAsync(int yearCourseId, [FromQuery] DateTime? date)
         {
-            return null;
+            var result = await _mediator.Send(new GetYearCourseEventsQuery{
+                YearCourseId = yearCourseId,
+                Date = date
+            });
+
+            if (!result.Succeeded)
+            {
+                return StatusCode((int?) result.ErrorType ?? 400, new ApiResponse
+                {
+                    Messages = result.ErrorMessages
+                });
+            }
+
+            var dto = _mapper.Map<List<GetEventResponse>>(result.Output);
+
+            return Ok(new ApiResponse<List<GetEventResponse>>
+            {
+                Result = dto
+            });
         }
 
         [HttpGet("/yearCourses/{yearCourseId}/groups/{groupId}/[controller]")]
