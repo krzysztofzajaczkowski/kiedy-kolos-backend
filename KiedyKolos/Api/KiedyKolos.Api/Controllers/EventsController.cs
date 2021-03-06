@@ -1,7 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using KiedyKolos.Api.Configuration;
+using KiedyKolos.Api.Responses;
 using KiedyKolos.Core.Models;
+using KiedyKolos.Core.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace KiedyKolos.Api.Controllers
 {
@@ -9,16 +16,38 @@ namespace KiedyKolos.Api.Controllers
     [Route("yearCourses/{yearCourseId}/[controller]")]
     public class EventsController : ControllerBase
     {
-        public EventsController()
+        private readonly AuthOptions _options;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
+        public EventsController(IOptions<AuthOptions> options,
+            IMediator mediator,
+            IMapper mapper)
         {
-
+            _options = options.Value;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [Route("/[controller]")]
         public async Task<IActionResult> GetAllAsync()
         {
-            return null;
+            var result = await _mediator.Send(new GetAllEventsQuery());
+
+            if (!result.Succeeded)
+            {
+                return StatusCode((int?) result.ErrorType ?? 400, new ApiResponse
+                {
+                    Messages = result.ErrorMessages
+                });
+            }
+
+            var dto = _mapper.Map<List<GetEventResponse>>(result.Output);
+
+            return Ok(new ApiResponse<List<GetEventResponse>>
+            {
+                Result = dto
+            });
         }
 
         [HttpGet]
