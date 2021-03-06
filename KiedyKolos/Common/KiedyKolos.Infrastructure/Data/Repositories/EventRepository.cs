@@ -18,6 +18,11 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task AddAsync(Event eventToAdd)
+        {
+            _dbContext.Events.Add(eventToAdd);
+        }
+
         public async Task DeleteAsync(int id)
         {
             var eventToDelete = await _dbContext.Events.FindAsync(id);

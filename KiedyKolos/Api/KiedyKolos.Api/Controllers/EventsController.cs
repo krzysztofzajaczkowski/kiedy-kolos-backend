@@ -6,7 +6,9 @@ using AutoMapper;
 using KiedyKolor.Core.Commands;
 using KiedyKolor.Core.Queries;
 using KiedyKolos.Api.Configuration;
+using KiedyKolos.Api.Requests;
 using KiedyKolos.Api.Responses;
+using KiedyKolos.Core.Commands;
 using KiedyKolos.Core.Models;
 using KiedyKolos.Core.Queries;
 using MediatR;
@@ -90,9 +92,43 @@ namespace KiedyKolos.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEventToYearCourseAsync(Event newEvent)
+        public async Task<IActionResult> AddEventToYearCourseAsync(int yearCourseId, CreateEventRequest request)
         {
-            return null;
+            var apiKey = Request.Headers.FirstOrDefault(h => string.Equals(h.Key, _options.ApiKeyHeaderName, StringComparison.CurrentCultureIgnoreCase))
+                .Value;
+
+            if (yearCourseId != request.YearCourseId)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    Messages = new List<string>
+                    {
+                        "Year course ID doesn't match!"
+                    }
+                });
+            }
+
+            var result = await _mediator.Send(new CreateEventCommand
+            {
+                YearCourseId = request.YearCourseId,
+                Password = apiKey,
+                Name = request.Name,
+                Description = request.Description,
+                Date = request.Date
+            });
+
+            if (!result.Succeeded)
+            {
+                return StatusCode((int?)result.ErrorType ?? 400, new ApiResponse<int>
+                {
+                    Messages = result.ErrorMessages
+                });
+            }
+
+            return Ok(new ApiResponse<int>
+            {
+                Result = result.Output
+            });
         }
 
         [HttpPut("{eventId}")]
