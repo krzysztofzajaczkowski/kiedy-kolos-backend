@@ -102,9 +102,27 @@ namespace KiedyKolos.Api.Controllers
         }
 
         [HttpDelete("{eventId}")]
-        public async Task<IActionResult> DeleteEventAsync(int eventId)
+        public async Task<IActionResult> DeleteEventAsync(int yearCourseId,int eventId)
         {
-            return null;
+            var apiKey = Request.Headers.FirstOrDefault(h => string.Equals(h.Key, _options.ApiKeyHeaderName, StringComparison.CurrentCultureIgnoreCase))
+                .Value;
+
+            var result = await _mediator.Send(new DeleteEventCommand
+            {
+                YearCourseId = yearCourseId,
+                EventId = eventId,
+                Password = apiKey
+            });
+
+            if (!result.Succeeded)
+            {
+                return StatusCode((int?)result.ErrorType ?? 400, new ApiResponse
+                {
+                    Messages = result.ErrorMessages
+                });
+            }
+
+            return NoContent();
         }
     }
 }
