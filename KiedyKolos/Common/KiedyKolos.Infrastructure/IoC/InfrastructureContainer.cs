@@ -25,6 +25,8 @@ namespace KiedyKolos.Infrastructure.IoC
 
             services.AddScoped<ISubjectRepository, SubjectRepository>();
 
+            services.AddScoped<IGroupRepository, GroupRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddMediatR(typeof(BaseResult));
