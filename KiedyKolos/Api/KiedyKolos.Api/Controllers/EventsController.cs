@@ -41,7 +41,7 @@ namespace KiedyKolos.Api.Controllers
 
             if (!result.Succeeded)
             {
-                return StatusCode((int?) result.ErrorType ?? 400, new ApiResponse
+                return StatusCode((int?)result.ErrorType ?? 400, new ApiResponse
                 {
                     Messages = result.ErrorMessages
                 });
@@ -58,14 +58,15 @@ namespace KiedyKolos.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetYearCourseEventsAsync(int yearCourseId, [FromQuery] DateTime? date)
         {
-            var result = await _mediator.Send(new GetYearCourseEventsQuery{
+            var result = await _mediator.Send(new GetYearCourseEventsQuery
+            {
                 YearCourseId = yearCourseId,
                 Date = date
             });
 
             if (!result.Succeeded)
             {
-                return StatusCode((int?) result.ErrorType ?? 400, new ApiResponse
+                return StatusCode((int?)result.ErrorType ?? 400, new ApiResponse
                 {
                     Messages = result.ErrorMessages
                 });
@@ -132,13 +133,44 @@ namespace KiedyKolos.Api.Controllers
         }
 
         [HttpPut("{eventId}")]
-        public async Task<IActionResult> UpdateEventDetailsAsync(int eventId, Event newEvent)
+        public async Task<IActionResult> UpdateEventDetailsAsync(int yearCourseId, int eventId, UpdateEventRequest request)
         {
-            return null;
+            var apiKey = Request.Headers.FirstOrDefault(h => string.Equals(h.Key, _options.ApiKeyHeaderName, StringComparison.CurrentCultureIgnoreCase))
+                            .Value;
+
+            if (yearCourseId != request.YearCourseId)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    Messages = new List<string>
+                    {
+                        "Year course ID doesn't match!"
+                    }
+                });
+            }
+
+            var result = await _mediator.Send(new UpdateEventCommand
+            {
+                YearCourseId = request.YearCourseId,
+                Password = apiKey,
+                Name = request.Name,
+                Description = request.Description,
+                Date = request.Date
+            });
+
+            if (!result.Succeeded)
+            {
+                return StatusCode((int?)result.ErrorType ?? 400, new ApiResponse<int>
+                {
+                    Messages = result.ErrorMessages
+                });
+            }
+
+            return Ok(new ApiResponse());
         }
 
         [HttpDelete("{eventId}")]
-        public async Task<IActionResult> DeleteEventAsync(int yearCourseId,int eventId)
+        public async Task<IActionResult> DeleteEventAsync(int yearCourseId, int eventId)
         {
             var apiKey = Request.Headers.FirstOrDefault(h => string.Equals(h.Key, _options.ApiKeyHeaderName, StringComparison.CurrentCultureIgnoreCase))
                 .Value;
