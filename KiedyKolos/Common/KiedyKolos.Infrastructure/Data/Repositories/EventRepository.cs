@@ -51,5 +51,11 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
                 return await events.Where(e => e.Date == date).ToListAsync();
             return await events.ToListAsync();
         }
+
+        public async Task UpdateAsync(Event eventToUpdate)
+        {
+            var existingEvent = await _dbContext.Events.FindAsync(eventToUpdate.Id);
+            _dbContext.Entry(existingEvent).CurrentValues.SetValues(eventToUpdate);
+        }
     }
 }

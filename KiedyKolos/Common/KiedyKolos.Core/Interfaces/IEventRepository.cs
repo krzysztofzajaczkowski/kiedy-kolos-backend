@@ -8,6 +8,7 @@ namespace KiedyKolos.Core.Interfaces
     public interface IEventRepository
     {
         Task AddAsync(Event eventToAdd);
+        Task UpdateAsync(Event eventToUpdate);
         Task<Event> GetAsync(int id);
         Task DeleteAsync(int id);
         Task<List<Event>> GetAllAsync();
