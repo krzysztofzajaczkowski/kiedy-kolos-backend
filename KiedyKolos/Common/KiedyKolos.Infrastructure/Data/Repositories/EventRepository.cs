@@ -52,6 +52,15 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
             return await events.ToListAsync();
         }
 
+        public async Task<List<Event>> GetYearCourseEventsForGroupAsync(int yearCourseId, int groupId, DateTime? date)
+        {
+            var eventIds = _dbContext.GroupEvents.Where(x => x.GroupId == groupId).Select(y => y.EventId);
+            var events = _dbContext.Events.Where(e => e.YearCourseId == yearCourseId && eventIds.Contains(e.Id));
+            if(date != null)
+                return await events.Where(e => e.Date == date).ToListAsync();
+            return await events.ToListAsync();
+        }
+
         public async Task UpdateAsync(Event eventToUpdate)
         {
             var existingEvent = await _dbContext.Events.FindAsync(eventToUpdate.Id);
