@@ -89,7 +89,26 @@ namespace KiedyKolos.Api.Controllers
         [HttpGet("{eventId}")]
         public async Task<IActionResult> GetEventDetailsAsync(int yearCourseId, int eventId)
         {
-            return null;
+            var result = await _mediator.Send(new GetEventDetailsQuery
+            {
+                YearCourseId = yearCourseId,
+                EventId = eventId
+            });
+
+            if (!result.Succeeded)
+            {
+                return StatusCode((int?)result.ErrorType ?? 400, new ApiResponse
+                {
+                    Messages = result.ErrorMessages
+                });
+            }
+
+            var dto = _mapper.Map<GetEventResponse>(result.Output);
+
+            return Ok(new ApiResponse<GetEventResponse>
+            {
+                Result = dto
+            });
         }
 
         [HttpPost]
