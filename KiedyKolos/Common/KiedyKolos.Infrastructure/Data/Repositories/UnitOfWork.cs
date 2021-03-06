@@ -15,6 +15,8 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
         private KeyRepository _keyRepository;
         private SubjectRepository _subjectRepository;
 
+        private IEventRepository _eventRepository;
+
         public UnitOfWork(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
@@ -24,6 +26,8 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
 
         public IKeyRepository KeyRepository => _keyRepository ??= new KeyRepository(_appDbContext);
         public ISubjectRepository SubjectRepository => _subjectRepository ??= new SubjectRepository(_appDbContext);
+
+        public IEventRepository EventRepository => _eventRepository ??= new EventRepository(_appDbContext);
 
         public async Task CommitAsync()
         {
