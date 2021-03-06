@@ -11,6 +11,7 @@ namespace KiedyKolos.Core.Interfaces
         IYearCourseRepository YearCourseRepository { get; }
         IKeyRepository KeyRepository { get; }
         ISubjectRepository SubjectRepository { get; }
+        IGroupRepository GroupRepository { get; }
         Task CommitAsync();
         Task RollbackAsync();
     }
