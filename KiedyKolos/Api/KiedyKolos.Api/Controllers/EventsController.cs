@@ -196,7 +196,9 @@ namespace KiedyKolos.Api.Controllers
                 Password = apiKey,
                 Name = request.Name,
                 Description = request.Description,
-                Date = request.Date
+                Date = request.Date,
+                SubjectId = request.SubjectId,
+                EventTypeId = request.EventTypeId
             });
 
             if (!result.Succeeded)
