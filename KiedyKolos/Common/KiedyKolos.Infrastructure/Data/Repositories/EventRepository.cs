@@ -48,7 +48,7 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
         {
             var events = _dbContext.Events.Where(e => e.YearCourseId == yearCourseId);
             if(date != null)
-                return await events.Where(e => e.Date == date).ToListAsync();
+                return await events.Where(e => e.Date.Date == ((DateTime)date).Date).ToListAsync();
             return await events.ToListAsync();
         }
 
@@ -57,7 +57,7 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
             var eventIds = _dbContext.GroupEvents.Where(x => x.GroupId == groupId).Select(y => y.EventId);
             var events = _dbContext.Events.Where(e => e.YearCourseId == yearCourseId && eventIds.Contains(e.Id));
             if(date != null)
-                return await events.Where(e => e.Date == date).ToListAsync();
+                return await events.Where(e => e.Date.Date == ((DateTime)date).Date).ToListAsync();
             return await events.ToListAsync();
         }
 
