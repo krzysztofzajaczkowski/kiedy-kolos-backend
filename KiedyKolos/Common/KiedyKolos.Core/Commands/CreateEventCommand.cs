@@ -1,10 +1,11 @@
 using System;
+using KiedyKolos.Core.Middleware.Interfaces;
 using KiedyKolos.Core.Result;
 using MediatR;
 
 namespace KiedyKolos.Core.Commands
 {
-    public class CreateEventCommand : IRequest<BaseResult<int>>
+    public class CreateEventCommand : IAuthorizable, IRequest<BaseResult<int>>
     {
         public int YearCourseId { get; set; }
         public string Password { get; set; }
