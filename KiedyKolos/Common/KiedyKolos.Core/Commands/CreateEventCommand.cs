@@ -11,5 +11,8 @@ namespace KiedyKolos.Core.Commands
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
+
+        public int SubjectId { get; set; }
+        public int EventTypeId { get; set; }
     }
 }

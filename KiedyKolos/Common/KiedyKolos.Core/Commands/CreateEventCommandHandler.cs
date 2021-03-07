@@ -31,7 +31,9 @@ namespace KiedyKolos.Core.Commands
                 Name = request.Name,
                 Description = request.Description,
                 YearCourseId = request.YearCourseId,
-                Date = request.Date
+                Date = request.Date,
+                EventTypeId = request.EventTypeId,
+                SubjectId = request.SubjectId
             };
 
             await _unitOfWork.EventRepository.AddAsync(eventToAdd);
