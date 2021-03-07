@@ -1,0 +1,30 @@
+version: '3.5'
+services:
+
+  api:
+    build: ./
+    environment:
+      - USE_SWAGGER=1
+      - USE_IN_MEMORY=0
+      - ConnectionStrings__DatabaseConnectionString=server=db;port=3306;database=KiedyKolos;Uid=root;Pwd=root;
+      - ASPNETCORE_URLS=https://+;http://+
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=s49z2a49n9541e
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    ports:
+      - 8080:80
+      - 4430:443
+      
+  db:
+    image: mariadb:latest
+    volumes:
+      - ./database/mariadb/initdb:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=root
+    ports:
+      - 3307:3306
+    healthcheck:
+      test: "mysql -p$$MYSQL_ROOT_PASSWORD -e 'SELECT 1;'"
+      timeout: 30s
+      interval: 8s
+      retries: 10
