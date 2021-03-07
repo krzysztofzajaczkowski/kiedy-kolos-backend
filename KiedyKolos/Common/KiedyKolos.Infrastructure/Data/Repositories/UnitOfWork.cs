@@ -14,6 +14,7 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
         private IYearCourseRepository _yearCourseRepository;
         private KeyRepository _keyRepository;
         private SubjectRepository _subjectRepository;
+        private GroupRepository _groupRepository;
 
         public UnitOfWork(AppDbContext appDbContext)
         {
@@ -24,6 +25,7 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
 
         public IKeyRepository KeyRepository => _keyRepository ??= new KeyRepository(_appDbContext);
         public ISubjectRepository SubjectRepository => _subjectRepository ??= new SubjectRepository(_appDbContext);
+        public IGroupRepository GroupRepository => _groupRepository ??= new GroupRepository(_appDbContext);
 
         public async Task CommitAsync()
         {
