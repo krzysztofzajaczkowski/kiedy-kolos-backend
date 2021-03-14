@@ -56,12 +56,13 @@ namespace KiedyKolos.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetYearCourseEventsAsync(int yearCourseId, [FromQuery] DateTime? date)
+        public async Task<IActionResult> GetYearCourseEventsAsync(int yearCourseId, [FromQuery] DateTime? date, [FromQuery] List<int> groupIds)
         {
             var result = await _mediator.Send(new GetYearCourseEventsQuery
             {
                 YearCourseId = yearCourseId,
-                Date = date
+                Date = date,
+                GroupIds = groupIds
             });
 
             if (!result.Succeeded)

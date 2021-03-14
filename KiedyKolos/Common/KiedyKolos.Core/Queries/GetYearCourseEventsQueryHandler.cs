@@ -18,7 +18,7 @@ namespace KiedyKolor.Core.Queries
         }
         public async Task<BaseResult<List<Event>>> Handle(GetYearCourseEventsQuery request, CancellationToken cancellationToken)
         {
-            var events = await _unitOfWork.EventRepository.GetYearCourseEventAsync(request.YearCourseId, request.Date);
+            var events = await _unitOfWork.EventRepository.GetYearCourseEventAsync(request.YearCourseId, request.Date, request.GroupIds);
             return BaseResult<List<Event>>.Success(ResultType.Ok, events);
         }
     }

@@ -44,11 +44,13 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
             return await _dbContext.Events.FindAsync(id);
         }
 
-        public async Task<List<Event>> GetYearCourseEventAsync(int yearCourseId, DateTime? date)
+        public async Task<List<Event>> GetYearCourseEventAsync(int yearCourseId, DateTime? date, List<int> groupIds)
         {
             var events = _dbContext.Events.Where(e => e.YearCourseId == yearCourseId);
             if(date != null)
-                return await events.Where(e => e.Date.Date == ((DateTime)date).Date).ToListAsync();
+                events = events.Where(e => e.Date.Date == ((DateTime)date).Date);
+            if(groupIds != null && groupIds.Count > 0)
+                events = events.Where(x => x.GroupEvents.Any(x => groupIds.Contains(x.Id)));
             return await events.ToListAsync();
         }
 

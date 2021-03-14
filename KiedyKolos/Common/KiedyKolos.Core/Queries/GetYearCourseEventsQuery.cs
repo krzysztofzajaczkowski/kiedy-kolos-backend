@@ -10,5 +10,6 @@ namespace KiedyKolor.Core.Queries
     {
         public int YearCourseId { get; set; }
         public DateTime? Date { get; set; }
+        public List<int> GroupIds { get; set; }
     }
 }
