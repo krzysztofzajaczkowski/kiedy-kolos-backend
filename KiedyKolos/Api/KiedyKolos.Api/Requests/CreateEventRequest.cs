@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace KiedyKolos.Api.Requests
 {
@@ -8,7 +9,8 @@ namespace KiedyKolos.Api.Requests
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public int YearCourseId { get; set; }
-        public int EventTypeId {get;set;}
-        public int SubjectId {get;set;}
+        public int EventTypeId { get; set; }
+        public int SubjectId { get; set; }
+        public List<int> GroupIds { get; set; }
     }
 }

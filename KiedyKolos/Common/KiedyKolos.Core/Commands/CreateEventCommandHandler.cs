@@ -37,6 +37,15 @@ namespace KiedyKolos.Core.Commands
             };
 
             await _unitOfWork.EventRepository.AddAsync(eventToAdd);
+            request.GroupIds.ForEach(x =>
+            {
+                eventToAdd.GroupEvents.Add(new GroupEvent
+                {
+                    EventId = eventToAdd.Id,
+                    GroupId = x
+                });
+            });
+
             await _unitOfWork.CommitAsync();
 
             return BaseResult<int>.Success(ResultType.Created, eventToAdd.Id);

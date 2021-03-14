@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using KiedyKolos.Core.Middleware.Interfaces;
 using KiedyKolos.Core.Result;
 using MediatR;
@@ -15,5 +16,7 @@ namespace KiedyKolos.Core.Commands
 
         public int SubjectId { get; set; }
         public int EventTypeId { get; set; }
+
+        public List<int> GroupIds {get;set;}
     }
 }
