@@ -33,7 +33,8 @@ namespace KiedyKolos.Core.Commands
                 YearCourseId = request.YearCourseId,
                 Date = request.Date,
                 EventTypeId = request.EventTypeId,
-                SubjectId = request.SubjectId
+                SubjectId = request.SubjectId,
+                GroupEvents = new List<GroupEvent>()
             };
 
             await _unitOfWork.EventRepository.AddAsync(eventToAdd);
