@@ -157,7 +157,8 @@ namespace KiedyKolos.Api.Controllers
                 Description = request.Description,
                 Date = request.Date,
                 SubjectId = request.SubjectId,
-                EventTypeId = request.EventTypeId
+                EventTypeId = request.EventTypeId,
+                GroupIds = request.GroupIds
             });
 
             if (!result.Succeeded)
@@ -190,7 +191,6 @@ namespace KiedyKolos.Api.Controllers
                     }
                 });
             }
-
             var result = await _mediator.Send(new UpdateEventCommand
             {
                 YearCourseId = request.YearCourseId,
@@ -199,7 +199,8 @@ namespace KiedyKolos.Api.Controllers
                 Description = request.Description,
                 Date = request.Date,
                 SubjectId = request.SubjectId,
-                EventTypeId = request.EventTypeId
+                EventTypeId = request.EventTypeId,
+                Id = request.Id
             });
 
             if (!result.Succeeded)
