@@ -31,6 +31,7 @@ namespace KiedyKolos.Core.Commands
             }
             await _unitOfWork.EventRepository.UpdateAsync(new Event
             {
+                Id = request.Id,
                 Name = request.Name,
                 Description = request.Description,
                 YearCourseId = request.YearCourseId,
