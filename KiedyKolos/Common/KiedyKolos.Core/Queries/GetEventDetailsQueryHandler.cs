@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using KiedyKolos.Core.Interfaces;
@@ -18,15 +19,25 @@ namespace KiedyKolos.Core.Queries
         }
         public async Task<BaseResult<Event>> Handle(GetEventDetailsQuery request, CancellationToken cancellationToken)
         {
+            //Check if year course exists & if request.eventId belongs to this yearCourse
+            var yearCourse = await _unitOfWork.YearCourseRepository.GetAsync(request.YearCourseId);
             var eventToFetch = await _unitOfWork.EventRepository.GetAsync(request.EventId);
-
-            if (eventToFetch == null)
+            if (eventToFetch == null || yearCourse == null)
             {
                 return BaseResult<Event>.Fail(ErrorType.NotFound,
                     new List<string>
                     {
                         "Resource not found!"
                     });
+            }
+
+            if (!yearCourse.Events.Any(x => x.Id == request.EventId))
+            {
+                return BaseResult<Event>.Fail(ErrorType.NotFound,
+                new List<string>
+                {
+                    "Requested event doesnt belong to given YearCourse!"
+                });
             }
 
             return BaseResult<Event>.Success(ResultType.Ok, eventToFetch);
