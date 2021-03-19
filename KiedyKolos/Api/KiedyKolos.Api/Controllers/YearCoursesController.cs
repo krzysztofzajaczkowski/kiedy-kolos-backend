@@ -49,6 +49,26 @@ namespace KiedyKolos.Api.Controllers
             });
         }
 
+        [HttpPost("auth")]
+        public async Task<IActionResult> AuthAsync(AuthRequest request)
+        {
+            var result = await _mediator.Send(new YearCourseAuthQuery
+            {
+                YearCourseId = request.YearCourseId,
+                Password = request.Password
+            });
+
+            if (!result.Succeeded)
+            {
+                return StatusCode((int?)result.ErrorType ?? 400, new ApiResponse<int>
+                {
+                    Messages = result.ErrorMessages
+                });
+            }
+
+            return Ok(new ApiResponse());
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
