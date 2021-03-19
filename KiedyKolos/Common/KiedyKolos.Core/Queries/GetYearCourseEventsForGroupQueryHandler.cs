@@ -21,7 +21,7 @@ namespace KiedyKolos.Core.Queries
 
         public async Task<BaseResult<List<Event>>> Handle(GetYearCourseEventsForGroupQuery request, CancellationToken cancellationToken)
         {
-            var yearCourse = await _unitOfWork.YearCourseRepository.GetAsync(request.YearCourseId);
+            var yearCourse = await _unitOfWork.YearCourseRepository.GetAsyncWithGroups(request.YearCourseId);
             if (yearCourse == null)
             {
                 return BaseResult<List<Event>>.Fail(ErrorType.NotFound,

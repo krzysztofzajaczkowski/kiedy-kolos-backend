@@ -8,6 +8,7 @@ namespace KiedyKolos.Core.Interfaces
     {
         Task<List<YearCourse>> GetAllAsync();
         Task<YearCourse> GetAsync(int id);
+        Task<YearCourse> GetAsyncWithGroups(int id);
         Task AddAsync(YearCourse yearCourse);
         Task DeleteAsync(int id);
         Task UpdateAsync(YearCourse yearCourse);

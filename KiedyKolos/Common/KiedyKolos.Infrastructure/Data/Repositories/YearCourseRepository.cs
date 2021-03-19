@@ -38,6 +38,13 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
             return await _dbContext.YearCourses.FindAsync(id);
         }
 
+        public async Task<YearCourse> GetAsyncWithGroups(int id)
+        {
+            return await _dbContext.YearCourses
+                .Include(x => x.Groups)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async  Task<List<YearCourse>> GetAllAsync()
         {
             return await _dbContext.YearCourses.ToListAsync();
