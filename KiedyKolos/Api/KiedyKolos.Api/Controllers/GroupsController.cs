@@ -15,7 +15,7 @@ using Microsoft.Extensions.Options;
 namespace KiedyKolos.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("yearCourses/{yearCourseId}/[controller]")]
     public class GroupsController : ControllerBase
     {
         private AuthOptions _options;
