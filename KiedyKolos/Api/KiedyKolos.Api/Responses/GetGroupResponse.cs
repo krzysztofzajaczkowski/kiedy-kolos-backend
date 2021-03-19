@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KiedyKolos.Api.Requests
+namespace KiedyKolos.Api.Responses
 {
-    public class CreateGroupRequest
+    public class GetGroupResponse
     {
-        public int YearCourseId { get; set; }
+        public int Id { get; set; }
         public int GroupNumber { get; set; }
         public string GroupName { get; set; }
     }

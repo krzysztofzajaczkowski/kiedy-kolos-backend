@@ -54,6 +54,11 @@ namespace KiedyKolos.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KiedyKolos.Api v1"));
             }
+            else if (Environment.GetEnvironmentVariable("USE_SWAGGER") == "1")
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KiedyKolos.Api v1"));
+            }
 
             app.UseHttpsRedirection();
 

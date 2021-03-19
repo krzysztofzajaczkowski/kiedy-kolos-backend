@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace KiedyKolos.Api.Requests
 {
-    public class CreateGroupRequest
+    public class CreateEventTypeRequest
     {
         public int YearCourseId { get; set; }
-        public int GroupNumber { get; set; }
-        public string GroupName { get; set; }
+        public string Name { get; set; }
     }
 }

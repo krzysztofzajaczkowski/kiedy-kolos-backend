@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using KiedyKolos.Core.Result;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,15 +16,27 @@ namespace KiedyKolos.Infrastructure.IoC
 	{
 		public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
 		{
-			services.AddDbContext<AppDbContext>(options =>
-			{
-				options.UseInMemoryDatabase("db");
-			});
+            if (Environment.GetEnvironmentVariable("USE_IN_MEMORY") == "1" || Environment.GetEnvironmentVariable("USE_IN_MEMORY") == null)
+            {
+                services.AddDbContext<AppDbContext>(options =>
+                {
+                    options.UseInMemoryDatabase("db");
+                });
+            }
+            else
+            {
+                services.AddDbContext<AppDbContext>(options =>
+                {
+                    options.UseMySql(config.GetConnectionString("DatabaseConnectionString"), ServerVersion.AutoDetect(config.GetConnectionString("DatabaseConnectionString")));
+                });
+            }
             services.AddScoped<IYearCourseRepository, YearCourseRepository>();
 
             services.AddScoped<IKeyRepository, KeyRepository>();
 
             services.AddScoped<ISubjectRepository, SubjectRepository>();
+
+            services.AddScoped<IGroupRepository, GroupRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

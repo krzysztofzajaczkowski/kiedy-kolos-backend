@@ -14,6 +14,8 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
         private IYearCourseRepository _yearCourseRepository;
         private KeyRepository _keyRepository;
         private SubjectRepository _subjectRepository;
+        private GroupRepository _groupRepository;
+        private EventTypeRepository _eventTypeRepository;
 
         private IEventRepository _eventRepository;
 
@@ -26,6 +28,9 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
 
         public IKeyRepository KeyRepository => _keyRepository ??= new KeyRepository(_appDbContext);
         public ISubjectRepository SubjectRepository => _subjectRepository ??= new SubjectRepository(_appDbContext);
+        public IGroupRepository GroupRepository => _groupRepository ??= new GroupRepository(_appDbContext);
+
+        public IEventTypeRepository EventTypeRepository => _eventTypeRepository ??= new EventTypeRepository(_appDbContext);
 
         public IEventRepository EventRepository => _eventRepository ??= new EventRepository(_appDbContext);
 

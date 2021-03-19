@@ -12,6 +12,8 @@ namespace KiedyKolos.Core.Interfaces
         IKeyRepository KeyRepository { get; }
         IEventRepository EventRepository { get; }
         ISubjectRepository SubjectRepository { get; }
+        IGroupRepository GroupRepository { get; }
+        IEventTypeRepository EventTypeRepository { get; }
         Task CommitAsync();
         Task RollbackAsync();
     }
