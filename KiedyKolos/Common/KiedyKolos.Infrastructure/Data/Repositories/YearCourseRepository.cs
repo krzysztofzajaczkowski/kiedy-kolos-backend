@@ -23,13 +23,14 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
 
         public async Task DeleteAsync(int id)
         {
-            var yearCourse = new YearCourse
-            {
-                Id = id
-            };
-            if(!await _dbContext.YearCourses.ContainsAsync(yearCourse))
-                return;
+            var yearCourse = await _dbContext.YearCourses.FindAsync(id);
 
+            if (yearCourse == null)
+            {
+                return;
+            }
+
+            _dbContext.Entry(yearCourse).State = EntityState.Deleted;
             _dbContext.YearCourses.Remove(yearCourse);
         }
 
