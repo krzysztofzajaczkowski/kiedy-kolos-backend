@@ -44,22 +44,12 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
 
         public async Task DeleteAsync(int id)
         {
-            //var subject = new Subject
-            //{
-            //    Id = id
-            //};
-
             var subject = await _dbContext.Subjects.FindAsync(id);
 
             if (subject == null)
             {
                 return;
             }
-
-            //if (!await _dbContext.Subjects.ContainsAsync(subject))
-            //{
-            //    return;
-            //}
 
             _dbContext.Entry(subject).State = EntityState.Deleted;
             _dbContext.Subjects.Remove(subject);
