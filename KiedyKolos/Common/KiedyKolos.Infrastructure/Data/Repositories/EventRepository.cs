@@ -28,7 +28,9 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
             var eventToDelete = await _dbContext.Events.FindAsync(id);
 
             if (eventToDelete == null)
+            {
                 return;
+            }
 
             _dbContext.Entry(eventToDelete).State = EntityState.Deleted;
             _dbContext.Events.Remove(eventToDelete);
