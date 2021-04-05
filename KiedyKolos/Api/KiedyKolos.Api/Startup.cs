@@ -60,6 +60,15 @@ namespace KiedyKolos.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KiedyKolos.Api v1"));
             }
 
+            if (Environment.GetEnvironmentVariable("ALLOW_ANY_CORS") == "1")
+            {
+                app.UseCors(x => x
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed(origin => true)
+                    .AllowCredentials());
+            }
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
