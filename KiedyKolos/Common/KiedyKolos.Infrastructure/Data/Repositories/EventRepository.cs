@@ -46,12 +46,17 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
             return await _dbContext.Events.FindAsync(id);
         }
 
+        public async Task<Event> GetYearCourseEventWithGroupsAsync(int yearCourseId, int id)
+        {
+            return await _dbContext.Events.Where(e => e.YearCourseId == yearCourseId).Include(e => e.GroupEvents).FirstOrDefaultAsync(e => e.Id == id);
+        }
+
         public async Task<List<Event>> GetYearCourseEventAsync(int yearCourseId, DateTime? date, List<int> groupIds)
         {
             var events = _dbContext.Events.Where(e => e.YearCourseId == yearCourseId);
-            if(date != null)
+            if (date != null)
                 events = events.Where(e => e.Date.Date == ((DateTime)date).Date);
-            if(groupIds != null && groupIds.Count > 0)
+            if (groupIds != null && groupIds.Count > 0)
                 events = events.Where(x => x.GroupEvents.Any(x => groupIds.Contains(x.Id)));
             return await events.ToListAsync();
         }
@@ -60,7 +65,7 @@ namespace KiedyKolos.Infrastructure.Data.Repositories
         {
             var eventIds = _dbContext.GroupEvents.Where(x => x.GroupId == groupId).Select(y => y.EventId);
             var events = _dbContext.Events.Where(e => e.YearCourseId == yearCourseId && eventIds.Contains(e.Id));
-            if(date != null)
+            if (date != null)
                 return await events.Where(e => e.Date.Date == ((DateTime)date).Date).ToListAsync();
             return await events.ToListAsync();
         }
