@@ -51,6 +51,8 @@ namespace KiedyKolos.Infrastructure.IoC
 
             services.AddValidatorsFromAssemblyContaining<CreateYearCourseCommandValidator>();
 
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
+
             return services;
 		}
 	}
