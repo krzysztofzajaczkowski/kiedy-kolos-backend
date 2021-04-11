@@ -11,6 +11,7 @@ using KiedyKolos.Infrastructure.Data.Repositories;
 using KiedyKolos.Core.Interfaces;
 using KiedyKolos.Core.Middleware.Behaviors;
 using KiedyKolos.Core.Validators.YearCourse;
+using KiedyKolos.Core.Validators.Group;
 
 namespace KiedyKolos.Infrastructure.IoC
 {
@@ -49,6 +50,7 @@ namespace KiedyKolos.Infrastructure.IoC
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DomainValidationBehavior<,>));
 
             services.AddValidatorsFromAssemblyContaining<CreateYearCourseCommandValidator>();
+            services.AddValidatorsFromAssemblyContaining<CreateYearCourseGroupCommandValidator>();
 
             return services;
 		}
