@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -9,6 +10,7 @@ using MediatR;
 
 namespace KiedyKolos.Core.Queries
 {
+
     public class GetEventDetailsQueryHandler : IRequestHandler<GetEventDetailsQuery, BaseResult<Event>>
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,7 +23,7 @@ namespace KiedyKolos.Core.Queries
         {
             //Check if year course exists & if request.eventId belongs to this yearCourse
             var yearCourse = await _unitOfWork.YearCourseRepository.GetAsync(request.YearCourseId);
-            var eventToFetch = await _unitOfWork.EventRepository.GetAsync(request.EventId);
+            var eventToFetch = await _unitOfWork.EventRepository.GetYearCourseEventWithGroupsAsync(request.YearCourseId, request.EventId);
             if (eventToFetch == null || yearCourse == null)
             {
                 return BaseResult<Event>.Fail(ErrorType.NotFound,
