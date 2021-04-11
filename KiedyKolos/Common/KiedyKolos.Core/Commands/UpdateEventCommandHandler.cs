@@ -23,7 +23,7 @@ namespace KiedyKolos.Core.Commands
         {
             var yearCourse = await _unitOfWork.YearCourseRepository.GetAsync(request.YearCourseId);
             if (yearCourse == null)
-            {dd
+            {
                 return BaseResult.Fail(ErrorType.NotFound,
                     new List<string>
                     {
