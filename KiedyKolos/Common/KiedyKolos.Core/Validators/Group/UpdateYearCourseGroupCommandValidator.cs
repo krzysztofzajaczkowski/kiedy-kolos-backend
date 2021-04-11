@@ -31,8 +31,8 @@ namespace KiedyKolos.Core.Validators.Group
 
             RuleFor(g => g).MustAsync(async (g, cancellation) =>
             {
-                var yearCourse = await _unitOfWork.YearCourseRepository.GetAsync(g.YearCourseId);
-                return !yearCourse.Groups.Any(ycg => (ycg.GroupNumber == g.GroupNumber || ycg.GroupName == g.GroupName) && ycg.Id != g.GroupId);
+                var groups = await _unitOfWork.GroupRepository.GetAllForYearCourseAsync(g.YearCourseId);
+                return !groups.Any(ycg => (ycg.GroupNumber == g.GroupNumber || ycg.GroupName == g.GroupName) && ycg.Id != g.GroupId);
             }).WithMessage("Group with given name or number already exists in this year course");
 
             RuleFor(x => x.GroupNumber).GreaterThanOrEqualTo(1);

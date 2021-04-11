@@ -13,8 +13,8 @@ namespace KiedyKolos.Core.Validators.Subject
             _unitOfWork = unitOfWork;
 
             RuleFor(x => x).MustAsync(async (x, cancellation) => {
-                var yearCourse = await _unitOfWork.YearCourseRepository.GetAsync(x.YearCourseId);
-                return !yearCourse.Subjects.Any(s => s.ShortName == x.ShortName || s.Name == x.Name);
+                var subjects = await _unitOfWork.SubjectRepository.GetAllForYearCourseAsync(x.YearCourseId);
+                return !subjects.Any(s => (s.ShortName == x.ShortName || s.Name == x.Name) && s.Id != x.SubjectId);
             }).WithMessage("Subject name and shortname should be unique in a yearcourse");
 
             RuleFor(x => x).MustAsync(async (x, cancellation) => {
