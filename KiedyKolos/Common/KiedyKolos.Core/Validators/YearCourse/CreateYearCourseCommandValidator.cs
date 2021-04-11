@@ -32,9 +32,8 @@ namespace KiedyKolos.Core.Validators.YearCourse
             }).WithMessage($"This year course already exists!");
 
             RuleFor(yc => yc.CurrentSemester).GreaterThanOrEqualTo(1)
-                .WithMessage($"Current semester must be equal or greater than 1!");
-
-            RuleFor(yc => yc.CurrentSemester).LessThanOrEqualTo(12)
+                .WithMessage($"Current semester must be equal or greater than 1!")
+                .LessThanOrEqualTo(12)
                 .WithMessage($"Current semester must be equal or less than 12!");
 
             RuleFor(yc => yc.CourseStartYear).GreaterThanOrEqualTo(1)
