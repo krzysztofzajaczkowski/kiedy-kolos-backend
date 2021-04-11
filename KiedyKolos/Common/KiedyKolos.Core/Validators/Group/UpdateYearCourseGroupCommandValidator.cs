@@ -25,19 +25,19 @@ namespace KiedyKolos.Core.Validators.Group
 
             RuleFor(g => g).MustAsync(async (g, cancellation) =>
             {
-                var yearCourse = await _unitOfWork.YearCourseRepository.GetAsyncWithGroups(g.YearCourseId);
-                return yearCourse.Groups.Any(ycg => ycg.Id == g.GroupId);
+                var groups = await _unitOfWork.GroupRepository.GetAllForYearCourseAsync(g.YearCourseId);
+                return groups.Any(ycg => ycg.Id == g.GroupId);
             }).WithMessage("Given year course group does not exist");
 
             RuleFor(g => g).MustAsync(async (g, cancellation) =>
             {
                 var yearCourse = await _unitOfWork.YearCourseRepository.GetAsync(g.YearCourseId);
-                return !yearCourse.Groups.Any(ycg => ycg.GroupNumber == g.GroupNumber || ycg.GroupName == g.GroupName);
+                return !yearCourse.Groups.Any(ycg => (ycg.GroupNumber == g.GroupNumber || ycg.GroupName == g.GroupName) && ycg.Id != g.GroupId);
             }).WithMessage("Group with given name or number already exists in this year course");
 
             RuleFor(x => x.GroupNumber).GreaterThanOrEqualTo(1);
 
-            RuleFor(x => x.GroupName).MaximumLength(20);
+            RuleFor(x => x.GroupName).NotEmpty().MaximumLength(20);
         }
     }
 }
