@@ -13,6 +13,19 @@ namespace KiedyKolos.Core.Validators.YearCourse
         {
             _unitOfWork = unitOfWork;
 
+            RuleFor(yc => yc).MustAsync(async (yearCourse, cancellation) =>
+            {
+                var yearCourses = await _unitOfWork.YearCourseRepository.GetAllAsync();
+
+                return !yearCourses.Any(yc =>
+                    yearCourse.YearCourseId != yc.Id &&
+                    yearCourse.CourseStartYear == yc.CourseStartYear &&
+                    yearCourse.Course == yc.Course &&
+                    yearCourse.Faculty == yc.Faculty &&
+                    yearCourse.University == yc.University &&
+                    yearCourse.CurrentSemester == yc.CurrentSemester);
+            }).WithMessage($"This year course already exists!");
+
             RuleFor(x => x).MustAsync(async (x, cancellation) => {
                 var yearCourse = await _unitOfWork.YearCourseRepository.GetAsync(x.YearCourseId);
                 return yearCourse != null;
