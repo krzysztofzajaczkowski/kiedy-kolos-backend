@@ -50,7 +50,6 @@ namespace KiedyKolos.Infrastructure.IoC
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DomainValidationBehavior<,>));
 
             services.AddValidatorsFromAssemblyContaining<CreateYearCourseCommandValidator>();
-            services.AddValidatorsFromAssemblyContaining<CreateYearCourseGroupCommandValidator>();
 
             return services;
 		}
