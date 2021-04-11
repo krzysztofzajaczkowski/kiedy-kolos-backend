@@ -124,9 +124,9 @@ namespace KiedyKolos.Api.Controllers
                 });
             }
 
-            var dto = _mapper.Map<GetEventResponse>(result.Output);
+            var dto = _mapper.Map<GetEventDetailsResponse>(result.Output);
 
-            return Ok(new ApiResponse<GetEventResponse>
+            return Ok(new ApiResponse<GetEventDetailsResponse>
             {
                 Result = dto
             });
@@ -200,6 +200,7 @@ namespace KiedyKolos.Api.Controllers
                 Date = request.Date,
                 SubjectId = request.SubjectId,
                 EventTypeId = request.EventTypeId,
+                GroupIds = request.GroupIds,
                 Id = request.Id
             });
 

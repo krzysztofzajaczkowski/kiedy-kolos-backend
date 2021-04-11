@@ -10,7 +10,7 @@ using KiedyKolos.Core.Models;
 
 namespace KiedyKolos.Api.Configuration
 {
-    public class MappingProfile: Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
@@ -29,7 +29,10 @@ namespace KiedyKolos.Api.Configuration
             CreateMap<Subject, GetSubjectResponse>();
 
             CreateMap<Event, GetEventResponse>();
-            
+
+            CreateMap<Event, GetEventDetailsResponse>().ForMember(ed => ed.GroupIds,
+                opt => opt.MapFrom(e => e.GroupEvents.Select(ge => ge.GroupId).ToList()));
+
             CreateMap<Group, GetGroupResponse>();
 
             CreateMap<EventType, GetEventTypeResponse>();

@@ -14,5 +14,6 @@ namespace KiedyKolos.Core.Interfaces
         Task<List<Event>> GetAllAsync();
         Task<List<Event>> GetYearCourseEventAsync(int yearCourseId, DateTime? date, List<int> groupIds);
         Task<List<Event>> GetYearCourseEventsForGroupAsync(int yearCourseId,int groupId, DateTime? date);
+        Task<Event> GetYearCourseEventWithGroupsAsync(int yearCourseId, int id);
     }
 }
