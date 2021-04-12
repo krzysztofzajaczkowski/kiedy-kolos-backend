@@ -22,9 +22,9 @@ namespace KiedyKolos.Api.Configuration
 
             CreateMap<UpdateYearCourseRequest, YearCourse>();
 
-            CreateMap<CreateSubjectRequest, CreateSubjectDto>();
+            CreateMap<CreateSubjectInlineRequest, CreateSubjectDto>();
 
-            CreateMap<CreateGroupRequest, CreateGroupDto>();
+            CreateMap<CreateGroupInlineRequest, CreateGroupDto>();
 
             CreateMap<Subject, GetSubjectResponse>();
 
